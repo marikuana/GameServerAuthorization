@@ -1,0 +1,3 @@
+[submodule "GameServerData"]
+	path = GameServerData
+	url = https://github.com/marikuana/GameServerData.git
