@@ -1,11 +1,26 @@
-﻿namespace GameServerAuthorization
+﻿using GameServerData;
+using Microsoft.EntityFrameworkCore;
+
+namespace GameServerAuthorization
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<Db>(options =>
+            {
+                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+            });
+
             services.AddSingleton<AuthOptions>();
-            services.AddSingleton<IAuth, Auth>();
+            services.AddTransient<IAccountServices, AccountService>();
             services.AddControllers();
 
             services.AddEndpointsApiExplorer();
