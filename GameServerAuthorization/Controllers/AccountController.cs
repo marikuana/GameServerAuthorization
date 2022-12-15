@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using GameServerData.Models;
 
 namespace GameServerAuthorization.Controllers
 {
@@ -11,10 +12,10 @@ namespace GameServerAuthorization.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        private IAuth _auth;
+        private IAccountServices _auth;
         private AuthOptions _authOptions;
 
-        public AccountController(IAuth auth, AuthOptions authOptions)
+        public AccountController(IAccountServices auth, AuthOptions authOptions)
         {
             _auth = auth;
             _authOptions = authOptions;
@@ -23,7 +24,7 @@ namespace GameServerAuthorization.Controllers
         [HttpPost("[action]")]
         public IActionResult Login(LoginModel loginModel)
         {
-            IAccount? account = _auth.GetAccount(loginModel.Login, loginModel.Password);
+            Account? account = _auth.GetAccount(loginModel.Login, loginModel.Password);
             if (account == null)
                 return Forbid();
 
