@@ -1,4 +1,6 @@
-﻿using GameServerData;
+﻿using GameServerAuthorization.Interfaces;
+using GameServerAuthorization.Services;
+using GameServerData;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameServerAuthorization
@@ -20,7 +22,7 @@ namespace GameServerAuthorization
             });
 
             services.AddSingleton<AuthOptions>();
-            services.AddTransient<IAccountServices, AccountService>();
+            services.AddTransient<IAccountManager, AccountManager>();
             services.AddControllers();
 
             services.AddEndpointsApiExplorer();
@@ -36,7 +38,7 @@ namespace GameServerAuthorization
             }
 
             app.UseHttpsRedirection();
-            
+
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
